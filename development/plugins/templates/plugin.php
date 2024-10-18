@@ -17,7 +17,7 @@ function load_template(string $templateName): string {
 }
 
 add_action( 'init', static function() {
-	wp_register_block_template(
+	register_block_template(
 		'templates//page',
 		[
 			'title' => 'My Single Page',
