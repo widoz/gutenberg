@@ -39,4 +39,28 @@ add_action('init', static function () {
 			}
 		]
 	);
+
+	is_admin() and wp_enqueue_script(
+		'block-binding',
+		plugin_dir_url(__FILE__) . 'resources/js/block-binding.js',
+		['wp-blocks', 'wp-element', 'wp-editor'],
+		filemtime(plugin_dir_path(__FILE__) . 'resources/js/block-binding.js')
+	);
+
+	register_block_bindings_source(
+		'block-binding/custom-url',
+		[
+			'label' => 'Custom URL',
+			'get_value_callback' => static function (array $sourceArgs, $blockInstance, string $attributeName) {
+				if (
+					$sourceArgs['key'] !== 'custom_url' ||
+					$attributeName !== 'url'
+				) {
+					return '';
+				}
+
+				return 'https://images6.alphacoders.com/135/1351738.jpeg';
+			}
+		]
+	);
 });
