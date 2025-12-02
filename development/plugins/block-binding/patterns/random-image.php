@@ -4,12 +4,16 @@
 	"metadata": {
 		"bindings": {
 			"url": {
-				"source": "block-binding/image-source",
-				"args":{}
+				"source": "block-binding/ninja-turtles",
+				"args":{
+					"url": "original_ninja_turtles"
+				}
 			},
-			"title": {
-				"source": "block-binding/image-title",
-				"args":{}
+			"alt": {
+				"source": "block-binding/custom-title",
+				"args":{
+					"title": "custom_title"
+				}
 			}
 		}
 	}

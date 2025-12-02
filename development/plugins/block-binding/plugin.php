@@ -21,21 +21,32 @@ add_action('init', static function () {
 	);
 
 	register_block_bindings_source(
-		'block-binding/image-source',
+		'block-binding/ninja-turtles',
 		[
-			'label' => 'http://localhost:8888/wp-content/uploads/2024/09/962264.png',
-			'get_value_callback' => static function () {
-				return 'http://localhost:8888/wp-content/uploads/2024/09/962264.png';
+			'label' => 'Ninja Turtles',
+			'get_value_callback' => static function (array $sourceArgs, $blockInstance, string $attributeName) {
+				if ($attributeName !== 'url') {
+					return '';
+				}
+
+				switch ($sourceArgs['url']) {
+					case 'original_ninja_turtles':
+						return 'https://i1.sndcdn.com/artworks-000157290951-wydoxo-t500x500.jpg';
+					case 'movie_2012':
+						return 'https://m.media-amazon.com/images/I/91OWuXWQQnL._UF1000,1000_QL80_.jpg';
+					default:
+						return 'https://picsum.photos/200';
+				}
 			}
 		]
 	);
 
 	register_block_bindings_source(
-		'block-binding/image-title',
+		'block-binding/custom-title',
 		[
-			'label' => 'Image Title',
+			'label' => 'Custom Title',
 			'get_value_callback' => static function () {
-				return 'Image Title';
+				return get_option('custom_image_title', 'Custom Title');
 			}
 		]
 	);
@@ -45,22 +56,5 @@ add_action('init', static function () {
 		plugin_dir_url(__FILE__) . 'resources/js/block-binding.js',
 		['wp-blocks', 'wp-element', 'wp-editor'],
 		filemtime(plugin_dir_path(__FILE__) . 'resources/js/block-binding.js')
-	);
-
-	register_block_bindings_source(
-		'block-binding/custom-url',
-		[
-			'label' => 'Custom URL',
-			'get_value_callback' => static function (array $sourceArgs, $blockInstance, string $attributeName) {
-				if (
-					$sourceArgs['key'] !== 'custom_url' ||
-					$attributeName !== 'url'
-				) {
-					return '';
-				}
-
-				return 'https://images6.alphacoders.com/135/1351738.jpeg';
-			}
-		]
 	);
 });
