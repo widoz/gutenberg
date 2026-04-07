@@ -1,0 +1,3 @@
+[submodule "development/core"]
+	path = development/core
+	url = https://github.com/widoz/WordPress
