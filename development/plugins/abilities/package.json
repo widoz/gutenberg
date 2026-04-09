@@ -1,0 +1,26 @@
+{
+	"name": "abilities-api",
+	"version": "1.0.0",
+	"description": "Demonstrates the Abilities API in WordPress.",
+	"license": "GPL-2.0-or-later",
+	"scripts": {
+		"build:script": "wp-scripts build --config ./webpack.config.js",
+		"start:script": "wp-scripts start --config ./webpack.config.js",
+		"build:module": "wp-scripts build --experimental-modules --config ./webpack.module.config.js",
+		"start:module": "wp-scripts start --experimental-modules --config ./webpack.module.config.js"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "*"
+	},
+	"dependencies": {
+		"@wordpress/abilities": "*",
+		"@wordpress/core-abilities": "*",
+		"@wordpress/data": "*",
+		"@wordpress/plugins": "*",
+		"@wordpress/element": "*",
+		"@wordpress/block-editor": "*",
+		"@wordpress/editor": "*",
+		"@wordpress/url": "*",
+		"@wordpress/api-fetch": "*"
+	}
+}
