@@ -5,19 +5,17 @@
 	"plugins": [ "." ],
 	"themes": [ "./test/emptytheme" ],
 	"phpmyadminPort": 9000,
+	"mappings": {
+		"wp-content/plugins/hooked-block": "./development/plugins/hooked-block",
+		"wp-content/plugins/abilities": "./development/plugins/abilities",
+		"wp-content/plugins/suspended-block": "./development/plugins/suspended-block",
+		"wp-content/plugins/interactivity-api": "./development/plugins/interactivity-api",
+		"wp-content/plugins/templates": "./development/plugins/templates",
+		"wp-content/plugins/block-binding": "./development/plugins/block-binding",
+		"wp-content/plugins/performance-lab": "https://downloads.wordpress.org/plugin/performance-lab.3.9.0.zip",
+		"wp-content/themes/twentytwentyfour": "./development/themes/twentytwentyfour"
+	},
 	"env": {
-		"development": {
-			"phpmyadminPort": 9000,
-			"mappings": {
-				"wp-content/plugins/hooked-block": "./development/plugins/hooked-block",
-				"wp-content/plugins/suspended-block": "./development/plugins/suspended-block",
-				"wp-content/plugins/interactivity-api": "./development/plugins/interactivity-api",
-				"wp-content/plugins/templates": "./development/plugins/templates",
-				"wp-content/plugins/block-binding": "./development/plugins/block-binding",
-				"wp-content/plugins/performance-lab": "https://downloads.wordpress.org/plugin/performance-lab.3.9.0.zip",
-				"wp-content/themes/twentytwentyfour": "./development/themes/twentytwentyfour"
-			}
-		},
 		"tests": {
 			"mappings": {
 				"wp-content/plugins/gutenberg": ".",
