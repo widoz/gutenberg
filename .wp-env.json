@@ -6,6 +6,7 @@
 	"themes": [ "./test/emptytheme" ],
 	"phpmyadminPort": 9000,
 	"mappings": {
+		"wp-content/plugins/data-views": "./development/plugins/data-views",
 		"wp-content/plugins/hooked-block": "./development/plugins/hooked-block",
 		"wp-content/plugins/abilities": "./development/plugins/abilities",
 		"wp-content/plugins/suspended-block": "./development/plugins/suspended-block",
