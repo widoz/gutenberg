@@ -1,4 +1,4 @@
-import type { Fields, View } from '@wordpress/dataviews';
+import type { DeepPartial, Fields, View } from '@wordpress/dataviews';
 
 import { createRoot } from 'react-dom/client';
 
@@ -115,6 +115,16 @@ const fields: Fields< Item > = [
 		id: 'author',
 		type: 'integer',
 		label: 'Author',
+		setValue: ( {
+			item,
+			value,
+		}: {
+			item: Record< string, any >;
+			value: string;
+		} ): DeepPartial< Record< string, any > > => {
+			const author = Number( value );
+			return { ...item, author };
+		},
 		render: ( { item }: { item: Item } ) => {
 			return AUTHORS.find( ( author ) => author.value === item.author )
 				?.label;

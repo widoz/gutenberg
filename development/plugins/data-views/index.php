@@ -13,6 +13,11 @@ add_action('init', function () {
 		require_once __DIR__ . '/views/admin-page.php';
 		echo ob_get_clean();
 	});
+	add_submenu_page('data-views', 'Data Form', 'Data Form', 'manage_options', 'data-form', function () {
+		ob_start();
+		require_once __DIR__ . '/views/admin-page.php';
+		echo ob_get_clean();
+	});
 });
 
 add_action(
@@ -20,10 +25,15 @@ add_action(
 	static function () {
 		$page = filter_input(INPUT_GET, 'page');
 		if ($page === 'data-views') {
-			$conf = @include_once plugin_dir_path(__FILE__) . 'build/main.asset.php';
-
 			wp_enqueue_style('wp-editor');
-			wp_enqueue_script('data-views', plugin_dir_url(__FILE__) . 'build/main.js', $conf['dependencies'], $conf['version'], true);
+			$conf = @include_once plugin_dir_path(__FILE__) . 'build/data-views.asset.php';
+			wp_enqueue_script('data-views', plugin_dir_url(__FILE__) . 'build/data-views.js', $conf['dependencies'], $conf['version'], true);
+		}
+
+		if ($page === 'data-form') {
+			wp_enqueue_style('wp-editor');
+			$conf = @include_once plugin_dir_path(__FILE__) . 'build/data-form.asset.php';
+			wp_enqueue_script('data-form', plugin_dir_url(__FILE__) . 'build/data-form.js', $conf['dependencies'], $conf['version'], true);
 		}
 	}
 );
