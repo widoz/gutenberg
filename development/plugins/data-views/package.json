@@ -1,0 +1,25 @@
+{
+	"name": "data-views",
+	"version": "1.0.0",
+	"description": "",
+	"main": "build/main.js",
+	"scripts": {
+		"build:dev": "wp-scripts start"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@wordpress/components": "file:../../../packages/components",
+		"@wordpress/dataviews": "file:../../../packages/dataviews",
+		"@wordpress/dom-ready": "file:../../../packages/dom-ready",
+		"@wordpress/element": "file:../../../packages/element",
+		"@wordpress/icons": "file:../../../packages/icons",
+		"@wordpress/theme": "file:../../../packages/theme",
+		"react": "^19.2.5",
+		"react-dom": "^19.2.5"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "file:../../../packages/scripts"
+	}
+}
