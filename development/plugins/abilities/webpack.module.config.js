@@ -4,7 +4,7 @@ const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extrac
 
 const MODULES = [ '@wordpress/abilities', '@wordpress/core-abilities' ];
 
-const [ moduleConfig ] = Array.isArray( defaultConfig )
+const [ , moduleConfig ] = Array.isArray( defaultConfig )
 	? defaultConfig
 	: [ defaultConfig, null ];
 
@@ -18,10 +18,6 @@ if ( moduleConfig ) {
 	configs.push( {
 		...moduleConfig,
 		entry: {
-			'core-abilities': path.resolve(
-				__dirname,
-				'src/core-abilities.ts'
-			),
 			'abilities-api-demo-front-office': path.resolve(
 				__dirname,
 				'src/frontoffice.ts'
@@ -30,16 +26,17 @@ if ( moduleConfig ) {
 		plugins: [
 			...pluginsWithoutDepExtraction,
 			new DependencyExtractionWebpackPlugin( {
-				requestToExternal: ( request ) => {
+				requestToExternalModule: ( request ) => {
 					if ( MODULES.includes( request ) ) {
-						return `module ${ request }`;
-					}
-					if ( request.includes( 'core-abilities' ) ) {
-						return `module ${ request }`;
+						return request;
 					}
 				},
 			} ),
 		],
+		output: {
+			...moduleConfig.output,
+			path: path.resolve( __dirname, 'build-module' ),
+		},
 	} );
 }
 
