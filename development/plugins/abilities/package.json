@@ -10,7 +10,7 @@
 		"start:module": "wp-scripts start --experimental-modules --config ./webpack.module.config.js"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "*"
+		"@wordpress/scripts": "file:../../../../packages/scripts/"
 	},
 	"dependencies": {
 		"@wordpress/abilities": "*",
