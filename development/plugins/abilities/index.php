@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types= 1);
+declare(strict_types=1);
 
 /**
  * Abilities API plugin bootstrap file.
@@ -63,10 +63,10 @@ add_action('wp_abilities_api_init', function () {
 					'content' => "Generated content based on the input integer: $id"
 				];
 			},
-			'permission_callback' => fn () => current_user_can('edit_posts'),
+			'permission_callback' => fn() => current_user_can('edit_posts'),
 			'meta' => [
 				'show_in_rest' => true,
-				'annotations'  => [
+				'annotations' => [
 					'readonly' => true,
 				],
 			]
@@ -74,27 +74,27 @@ add_action('wp_abilities_api_init', function () {
 	);
 });
 
-// add_action('enqueue_block_assets', function () {
-// 	$asset = require __DIR__ . '/build/abilities-api-demo.asset.php';
-// 	wp_enqueue_script(
-// 		'abilities-api-demo',
-// 		plugin_dir_url(__FILE__) . 'build/abilities-api-demo.js',
-// 		$asset['dependencies'],
-// 		$asset['version'],
-// 		true
-// 	);
-// });
+add_action('enqueue_block_assets', function () {
+	$asset = require __DIR__ . '/build/abilities-api-demo.asset.php';
+	wp_enqueue_script_module('@wordpress/core-abilities');
+	wp_enqueue_script(
+		'abilities-api-demo',
+		plugin_dir_url(__FILE__) . 'build/abilities-api-demo.js',
+		$asset['dependencies'],
+		$asset['version'],
+		true
+	);
+});
 
 add_action('wp_enqueue_scripts', function () {
 	wp_enqueue_script('wp-data');
 	wp_enqueue_script('wp-url');
 	wp_enqueue_script('wp-api-fetch');
-	wp_enqueue_script_module( 'core-abilities', plugin_dir_url(__FILE__) . 'build/abilities-api-demo-front-office.js', ['@wordpress/abilities'], null);
-	wp_enqueue_script_module( '@wordpress/abilities' );
+	wp_enqueue_script_module( '@wordpress/core-abilities' );
 	wp_enqueue_script_module(
 		'abilities-api-demo-front-office',
-		plugin_dir_url(__FILE__) . 'build/abilities-api-demo-front-office.js',
-		['core-abilities'],
+		plugin_dir_url(__FILE__) . 'build-module/abilities-api-demo-front-office.js',
+		['@wordpress/core-abilities'],
 		null,
 		[
 			'in_footer' => true
