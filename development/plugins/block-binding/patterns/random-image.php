@@ -6,7 +6,7 @@
 			"url": {
 				"source": "block-binding/old-school-ninja-turtle",
 				"args":{
-					"url": "old_school_ninja_turtles"
+					"slug": "old_school_ninja_turtles"
 				}
 			}
 		}

@@ -21,7 +21,7 @@ add_action('init', static function () {
 	);
 
 	register_block_bindings_source(
-		'block-binding/old-school-ninja-turtles',
+		'block-binding/old-school-ninja-turtle',
 		[
 			'label' => 'Old School Ninja Turtles',
 			'get_value_callback' => static function (array $sourceArgs, \WP_Block $block, string $attributeName) {
@@ -29,7 +29,7 @@ add_action('init', static function () {
 					return '';
 				}
 
-				switch ($sourceArgs['url']) {
+				switch ($sourceArgs['slug']) {
 					case 'old_school_ninja_turtles':
 						return 'https://i1.sndcdn.com/artworks-000157290951-wydoxo-t500x500.jpg';
 					default:
@@ -39,10 +39,11 @@ add_action('init', static function () {
 		]
 	);
 
+	$conf = require_once plugin_dir_path(__FILE__) . 'build/block-bindings.asset.php';
 	is_admin() and wp_enqueue_script(
 		'block-binding',
-		plugin_dir_url(__FILE__) . 'resources/js/block-binding.js',
-		['wp-blocks', 'wp-element', 'wp-editor'],
-		filemtime(plugin_dir_path(__FILE__) . 'resources/js/block-binding.js')
+		plugin_dir_url(__FILE__) . 'build/block-bindings.js',
+		$conf['dependencies'],
+		$conf['version'],
 	);
 });
