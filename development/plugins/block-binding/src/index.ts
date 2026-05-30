@@ -1,16 +1,14 @@
-window.wp.domReady( () => {
-	window.wp.blocks.registerBlockBindingsSource( {
-		name: 'block-binding/ninja-turtles',
+import domReady from '@wordpress/dom-ready';
+import { registerBlockBindingsSource } from '@wordpress/blocks';
+
+domReady( () => {
+	registerBlockBindingsSource( {
+		name: 'block-binding/old-school-ninja-turtle',
 		label: 'Ninja Turtles',
-		getValues( { bindings } ) {
-			if ( bindings?.url?.args?.url === 'original_ninja_turtles' ) {
+		getValues( { bindings }: { bindings: any } ) {
+			if ( bindings?.url?.args?.url === 'old_school_ninja_turtles' ) {
 				return {
 					url: 'https://i1.sndcdn.com/artworks-000157290951-wydoxo-t500x500.jpg',
-				};
-			}
-			if ( bindings?.url?.args?.url === 'movie_2012' ) {
-				return {
-					url: 'https://m.media-amazon.com/images/I/91OWuXWQQnL._UF1000,1000_QL80_.jpg',
 				};
 			}
 
@@ -21,17 +19,10 @@ window.wp.domReady( () => {
 		getFieldsList() {
 			return [
 				{
-					label: 'Original Ninja Turtles',
+					label: 'Old School Ninja Turtles',
 					type: 'string',
 					args: {
-						url: 'original_ninja_turtles',
-					},
-				},
-				{
-					label: '2012 Movie',
-					type: 'string',
-					args: {
-						url: 'movie_2012',
+						url: 'old_school_ninja_turtles',
 					},
 				},
 			];
@@ -40,10 +31,11 @@ window.wp.domReady( () => {
 			return true;
 		},
 	} );
-	window.wp.blocks.registerBlockBindingsSource( {
+
+	registerBlockBindingsSource( {
 		name: 'block-binding/custom-title',
 		label: 'Custom Title',
-		getValues( { bindings } ) {
+		getValues( { bindings }: { bindings: any } ) {
 			if ( bindings?.alt?.args?.title === 'custom_title' ) {
 				return {
 					alt: 'Custom Title',
