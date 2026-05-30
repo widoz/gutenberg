@@ -4,15 +4,9 @@
 	"metadata": {
 		"bindings": {
 			"url": {
-				"source": "block-binding/ninja-turtles",
+				"source": "block-binding/old-school-ninja-turtle",
 				"args":{
-					"url": "original_ninja_turtles"
-				}
-			},
-			"alt": {
-				"source": "block-binding/custom-title",
-				"args":{
-					"title": "custom_title"
+					"url": "old_school_ninja_turtles"
 				}
 			}
 		}

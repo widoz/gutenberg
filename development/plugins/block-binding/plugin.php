@@ -21,32 +21,20 @@ add_action('init', static function () {
 	);
 
 	register_block_bindings_source(
-		'block-binding/ninja-turtles',
+		'block-binding/old-school-ninja-turtles',
 		[
-			'label' => 'Ninja Turtles',
-			'get_value_callback' => static function (array $sourceArgs, $blockInstance, string $attributeName) {
+			'label' => 'Old School Ninja Turtles',
+			'get_value_callback' => static function (array $sourceArgs, \WP_Block $block, string $attributeName) {
 				if ($attributeName !== 'url') {
 					return '';
 				}
 
 				switch ($sourceArgs['url']) {
-					case 'original_ninja_turtles':
+					case 'old_school_ninja_turtles':
 						return 'https://i1.sndcdn.com/artworks-000157290951-wydoxo-t500x500.jpg';
-					case 'movie_2012':
-						return 'https://m.media-amazon.com/images/I/91OWuXWQQnL._UF1000,1000_QL80_.jpg';
 					default:
-						return 'https://picsum.photos/200';
+						return $block->attributes['url'];
 				}
-			}
-		]
-	);
-
-	register_block_bindings_source(
-		'block-binding/custom-title',
-		[
-			'label' => 'Custom Title',
-			'get_value_callback' => static function () {
-				return get_option('custom_image_title', 'Custom Title');
 			}
 		]
 	);
