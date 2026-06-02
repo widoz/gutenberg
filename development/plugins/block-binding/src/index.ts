@@ -31,4 +31,29 @@ domReady( () => {
 			return true;
 		},
 	} );
+
+	registerBlockBindingsSource( {
+		name: 'block-binding/manipulated-text',
+		label: 'Manipulated Text',
+		getValues( { bindings }: { bindings: any } ) {
+			return {
+				title: bindings.title,
+			};
+		},
+		getFieldsList() {
+			return [
+				{
+					label: 'Manipulated Text',
+					type: 'string',
+					args: {
+						slug: 'manipulated_text',
+					},
+				},
+			];
+		},
+		canUserEditValue() {
+			return true;
+		},
+		usesContext: [ 'postId' ],
+	} );
 } );

@@ -1,0 +1,20 @@
+{
+	"apiVersion": 3,
+	"name": "block-binding/block",
+	"version": "",
+	"title": "Block Binding",
+	"description": "Block binding examples",
+	"category": "widgets",
+	"keywords": [ "block binding" ],
+	"textdomain": "block-binding",
+	"attributes": {
+		"content": {
+			"type": "string",
+			"role": "content",
+			"default": "Hello world!"
+		}
+	},
+	"supports": {
+		"html": false
+	}
+}

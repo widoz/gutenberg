@@ -12,6 +12,10 @@ if ( scriptConfig ) {
 		...scriptConfig,
 		entry: {
 			'block-bindings': path.resolve( __dirname, 'src/index.ts' ),
+			'block-bindings-block': path.resolve(
+				__dirname,
+				'src/binding-block.tsx'
+			),
 		},
 	} );
 }
