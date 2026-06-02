@@ -1,5 +1,6 @@
 import domReady from '@wordpress/dom-ready';
 import { registerBlockBindingsSource } from '@wordpress/blocks';
+import { store as coreStore } from '@wordpress/core-data';
 
 domReady( () => {
 	registerBlockBindingsSource( {
@@ -13,7 +14,7 @@ domReady( () => {
 			}
 
 			return {
-				url: bindings.url,
+				url: undefined,
 			};
 		},
 		getFieldsList() {
@@ -35,9 +36,31 @@ domReady( () => {
 	registerBlockBindingsSource( {
 		name: 'block-binding/manipulated-text',
 		label: 'Manipulated Text',
-		getValues( { bindings }: { bindings: any } ) {
+		getValues( {
+			select,
+			context,
+		}: {
+			bindings: any;
+			context: any;
+			select: any;
+		} ) {
+			const { postId, postType } = context;
+			if ( ! postId || ! postType ) {
+				return {
+					content: undefined,
+				};
+			}
+
+			const post = select( coreStore ).getEntityRecord(
+				'postType',
+				postType,
+				postId
+			);
+
+			const title = String( post?.title?.rendered );
+
 			return {
-				title: bindings.title,
+				content: `This is a manipulated text: ${ title }`,
 			};
 		},
 		getFieldsList() {
@@ -45,15 +68,13 @@ domReady( () => {
 				{
 					label: 'Manipulated Text',
 					type: 'string',
-					args: {
-						slug: 'manipulated_text',
-					},
+					args: {},
 				},
 			];
 		},
 		canUserEditValue() {
 			return true;
 		},
-		usesContext: [ 'postId' ],
+		usesContext: [ 'postId', 'postType' ],
 	} );
 } );
