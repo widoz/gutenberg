@@ -1,19 +1,23 @@
 import type { JSX } from 'react';
 
-import { useBlockProps } from '@wordpress/block-editor';
+import type { BlockEditProps } from '@wordpress/blocks';
+import { RichText, useBlockProps } from '@wordpress/block-editor';
 import { registerBlockType } from '@wordpress/blocks';
+
 import metadata from './block.json';
 
-type Props = {
-	attributes: {
-		content: string;
-	};
-};
+interface Props extends BlockEditProps< { content: string } > {}
 
 function Edit( props: Props ): JSX.Element {
 	return (
 		<div { ...useBlockProps() }>
-			<p>{ props.attributes.content }</p>
+			<RichText
+				tagName="p"
+				value={ props.attributes.content }
+				onChange={ ( content: string ) => {
+					props.setAttributes( { content } );
+				} }
+			/>
 		</div>
 	);
 }
