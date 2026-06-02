@@ -10,8 +10,10 @@
 		"start:module": "wp-scripts start --experimental-modules --config ./webpack.module.config.js"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "file:../../../../packages/scripts/",
+		"@types/react": "^19.2.15",
+		"@wordpress/block-editor": "file:../../../../packages/block-editor/",
+		"@wordpress/blocks": "file:../../../../packages/blocks/",
 		"@wordpress/dom-ready": "file:../../../../packages/dom-ready/",
-		"@wordpress/blocks": "file:../../../../packages/blocks/"
+		"@wordpress/scripts": "file:../../../../packages/scripts/"
 	}
 }
