@@ -1,0 +1,17 @@
+{
+	"name": "client-package",
+	"version": "1.0.0",
+	"description": "Build The Client Package",
+	"license": "GPL-2.0-or-later",
+	"module": "build-module/index.mjs",
+	"wpScript": true,
+	"dependencies": {
+		"@build-experiments/client-package-lib": "file:../client-package-lib/",
+		"@wordpress/editor": "file:../../../../../packages/editor/",
+		"@wordpress/i18n": "file:../../../../../packages/i18n/",
+		"@wordpress/plugins": "file:../../../../../packages/plugins/"
+	},
+	"devDependencies": {
+		"@types/react": "^19.2.15"
+	}
+}
