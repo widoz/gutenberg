@@ -1,0 +1,21 @@
+{
+	"name": "build",
+	"version": "1.0.0",
+	"description": "Demonstrates the Block Binding API in WordPress.",
+	"license": "GPL-2.0-or-later",
+	"wpPlugin": {
+		"name": "buildExperiments",
+		"scriptGlobal": "buildExperiments",
+		"packageNamespace": "build-experiments",
+		"handlePrefix": "be"
+	},
+	"devDependencies": {
+		"@types/react": "^19.2.15",
+		"@wordpress/wp-build": "file:../../../../packages/wp-build/",
+		"@wordpress/create-block": "file:../../../../packages/create-block/",
+		"@wordpress/editor": "file:../../../../packages/editor"
+	},
+	"scripts": {
+		"build": "wp-build --watch"
+	}
+}

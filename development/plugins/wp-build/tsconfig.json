@@ -1,0 +1,9 @@
+{
+	"extends": "../../../tsconfig.base.json",
+	"compilerOptions": {
+		"rootDir": "packages",
+		"declarationDir": "build-types",
+		"types": [ "react" ]
+	},
+	"include": [ "packages" ]
+}
