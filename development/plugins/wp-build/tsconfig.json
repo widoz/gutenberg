@@ -4,6 +4,5 @@
 		"rootDir": "packages",
 		"declarationDir": "build-types",
 		"types": [ "react" ]
-	},
-	"include": [ "packages" ]
+	}
 }
