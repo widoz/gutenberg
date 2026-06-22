@@ -71,5 +71,5 @@ packages/react-native-editor/src/setup-local.js
 *.rej
 *.orig
 .idea
-development/core 
+development/core
 development/themes
