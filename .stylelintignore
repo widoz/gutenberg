@@ -6,3 +6,5 @@ packages/base-styles/internal/_wpds-token-fallbacks.scss
 packages/theme/prebuilt
 packages/theme/stylelint-plugins/test/fixtures
 vendor
+development/core
+development/themes

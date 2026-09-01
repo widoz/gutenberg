@@ -441,6 +441,15 @@ export default dedupePlugins( [
 		},
 	},
 
+	// Override: Local sandbox plugins — plain JavaScript, so JSX is allowed
+	// in `.js` files there.
+	{
+		files: [ 'development/**/*.js' ],
+		rules: {
+			'react/jsx-filename-extension': 'off',
+		},
+	},
+
 	// Override: Development files — disable certain import/data rules.
 	{
 		files: developmentFiles,

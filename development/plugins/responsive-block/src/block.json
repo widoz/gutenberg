@@ -1,0 +1,38 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "responsive-block/grid",
+	"version": "1.0.0",
+	"title": "Responsive Grid",
+	"category": "design",
+	"icon": "grid-view",
+	"description": "A grid whose column count changes per viewport state.",
+	"textdomain": "responsive-block",
+	"attributes": {
+		"columns": {
+			"type": "object",
+			"default": { "default": 3 }
+		},
+		"gap": {
+			"type": "object",
+			"default": { "default": "1.5rem" }
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"color": {
+			"background": true,
+			"text": true
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true
+		}
+	},
+	"example": {},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}
