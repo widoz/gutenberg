@@ -2,9 +2,22 @@
 	"name": "data-views",
 	"version": "1.0.0",
 	"description": "",
-	"main": "build/main.js",
 	"scripts": {
-		"build:dev": "wp-scripts start"
+		"build:dev": "wp-scripts start",
+		"build": "wp-build --watch"
+	},
+	"wpPlugin": {
+		"name": "data_views",
+		"scriptGlobal": "dataViews",
+		"packageNamespace": "my-plugin",
+		"pages": [
+			{
+				"id": "data-views",
+				"init": [
+					"@my-plugin/my-page-init"
+				]
+			}
+		]
 	},
 	"keywords": [],
 	"author": "",
@@ -20,6 +33,7 @@
 		"react-dom": "^19.2.5"
 	},
 	"devDependencies": {
+		"@wordpress/build": "file:../../../packages/wp-build",
 		"@wordpress/scripts": "file:../../../packages/scripts"
 	}
 }
