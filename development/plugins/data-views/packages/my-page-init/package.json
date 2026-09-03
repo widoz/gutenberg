@@ -1,0 +1,12 @@
+{
+	"name": "@my-plugin/my-page-init",
+	"module": "build-module/index.mjs",
+	"wpScriptModuleExports": {
+		".": "./build-module/index.mjs"
+	},
+	"dependencies": {
+		"@wordpress/boot": "file:../../boot",
+		"@wordpress/data": "file:../../data",
+		"@wordpress/icons": "file:../../icons"
+	}
+}

@@ -10,6 +10,24 @@
 			"name": "Launch Chrome against localhost",
 			"url": "http://localhost:8888",
 			"webRoot": "${workspaceFolder}"
+		},
+		{
+			"name": "Gutenberg Xdebug",
+			"type": "php",
+			"request": "launch",
+			"port": 9003,
+			"pathMappings": {
+				"/var/www/html/wp-content/plugins/gutenberg": "${workspaceFolder}"
+			}
+		},
+		{
+			"name": "Plugins Xdebug",
+			"type": "php",
+			"request": "launch",
+			"port": 9003,
+			"pathMappings": {
+				"/var/www/html/wp-content/plugins/data-views": "${workspaceFolder}/development/plugins/data-views"
+			}
 		}
 	]
 }

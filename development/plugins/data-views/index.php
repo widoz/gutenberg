@@ -7,33 +7,29 @@ declare(strict_types=1);
  * Plugin Version: 1.0.0
  */
 
-add_action('init', function () {
-	add_menu_page('Data Views', 'Data Views', 'manage_options', 'data-views', function () {
-		ob_start();
-		require_once __DIR__ . '/views/admin-page.php';
-		echo ob_get_clean();
-	});
-	add_submenu_page('data-views', 'Data Form', 'Data Form', 'manage_options', 'data-form', function () {
-		ob_start();
-		require_once __DIR__ . '/views/admin-page.php';
-		echo ob_get_clean();
-	});
+require_once __DIR__ . '/build/build.php';
+
+add_action('admin_menu', static function () {
+	// The page slug must match an entry in `wpPlugin.pages`. Without a menu
+	// registration, `user_can_access_admin_page()` denies the request before
+	// the generated interceptor runs on `admin_init`.
+	add_menu_page(
+		'Data Views',
+		'Data Views',
+		'manage_options',
+		'data-views',
+		'data_views_data_views_render_page'
+	);
 });
 
-add_action(
-	'admin_enqueue_scripts',
-	static function () {
-		$page = filter_input(INPUT_GET, 'page');
-		if ($page === 'data-views') {
-			wp_enqueue_style('wp-editor');
-			$conf = @include_once plugin_dir_path(__FILE__) . 'build/data-views.asset.php';
-			wp_enqueue_script('data-views', plugin_dir_url(__FILE__) . 'build/data-views.js', $conf['dependencies'], $conf['version'], true);
-		}
+// The page template dequeues every admin style, so the `.js .hide-if-js` rule
+// from `common.css` is missing and the no-JavaScript notice stays visible.
+// The `data-views_init` hook runs after the dequeue loop and before `print_admin_styles()`.
+add_action('data-views_init', static function () {
+	wp_enqueue_style('common');
 
-		if ($page === 'data-form') {
-			wp_enqueue_style('wp-editor');
-			$conf = @include_once plugin_dir_path(__FILE__) . 'build/data-form.asset.php';
-			wp_enqueue_script('data-form', plugin_dir_url(__FILE__) . 'build/data-form.js', $conf['dependencies'], $conf['version'], true);
-		}
-	}
-);
+	// The `@my-plugin/my-page-init` module only updates existing menu items.
+	// Register each item here first, or the sidebar stays empty.
+	data_views_register_data_views_menu_item('data-views', 'Data Views', '/');
+	data_views_register_data_views_menu_item('posts-views', 'Post Views', '/posts-views');
+});

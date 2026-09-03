@@ -1,0 +1,9 @@
+{
+	"name": "posts-views-route",
+	"version": "1.0.0",
+	"private": true,
+	"route": {
+		"path": "/posts-views",
+		"page": "data-views"
+	}
+}
