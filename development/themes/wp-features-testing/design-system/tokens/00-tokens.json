@@ -15,7 +15,8 @@
 					"accent": "#18181b",
 					"on-accent": "#fafafa",
 					"danger": "#dc2626",
-					"danger-surface": "#fef2f2"
+					"danger-surface": "#fef2f2",
+					"red": "#dc2626"
 				},
 				"font": {
 					"family": {

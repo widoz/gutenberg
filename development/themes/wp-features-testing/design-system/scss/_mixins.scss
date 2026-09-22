@@ -99,13 +99,13 @@
 // One step of the type scale.
 @mixin text($size: body-sm, $line-height: normal, $font-weight: null, $letter-spacing: null) {
 	font-size: t.get(t.$font-size, $size);
-	line-height: t.get(t.$leading, $line-height);
+	line-height: t.get(t.$font-leading, $line-height);
 
 	@if $font-weight {
-		font-weight: t.get(t.$weight, $font-weight);
+		font-weight: t.get(t.$font-weight, $font-weight);
 	}
 
 	@if $letter-spacing {
-		letter-spacing: t.get(t.$tracking, $letter-spacing);
+		letter-spacing: t.get(t.$font-tracking, $letter-spacing);
 	}
 }
