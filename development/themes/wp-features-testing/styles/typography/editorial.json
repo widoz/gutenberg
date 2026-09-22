@@ -1,0 +1,26 @@
+{
+	"$schema": "https://schemas.wp.org/wp/6.7/theme.json",
+	"version": 3,
+	"title": "Editorial typography",
+	"settings": {
+		"custom": {
+			"ds": {
+				"font": {
+					"family": {
+						"body": "ui-serif, Georgia, Cambria, \"Times New Roman\", Times, serif"
+					},
+					"size": {
+						"body": "1.0625rem",
+						"display": "3rem"
+					},
+					"tracking": {
+						"tight": "-0.035em"
+					},
+					"weight": {
+						"semibold": "var(--wp--custom--ds--font--weight--normal)"
+					}
+				}
+			}
+		}
+	}
+}

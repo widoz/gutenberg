@@ -14,7 +14,7 @@
 		"./development/plugins/block-binding",
 		"./development/plugins/wp-build"
 	],
-	"themes": [ "./test/emptytheme", "./development/themes/twentytwentyfive" ],
+	"themes": [ "./test/emptytheme", "./development/themes/twentytwentyfive", "./development/themes/wp-features-testing" ],
 	"phpmyadminPort": 9000,
 	"mappings": {
 		"wp-content/plugins/ai": "https://downloads.wordpress.org/plugin/ai.1.0.1.zip",

@@ -1,0 +1,14 @@
+{
+	"$schema": "https://schemas.wp.org/wp/6.7/theme.json",
+	"version": 3,
+	"styles": {
+		"blocks": {
+			"core/term-name": {
+				"typography": {
+					"fontSize": "var(--wp--custom--ds--font--size--body-sm)",
+					"fontWeight": "var(--wp--custom--ds--font--weight--medium)"
+				}
+			}
+		}
+	}
+}

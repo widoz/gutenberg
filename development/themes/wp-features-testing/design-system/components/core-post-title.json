@@ -1,0 +1,16 @@
+{
+	"$schema": "https://schemas.wp.org/wp/6.7/theme.json",
+	"version": 3,
+	"styles": {
+		"blocks": {
+			"core/post-title": {
+				"typography": {
+					"fontSize": "var(--wp--custom--ds--font--size--display)",
+					"fontWeight": "var(--wp--custom--ds--font--weight--semibold)",
+					"lineHeight": "var(--wp--custom--ds--font--leading--none)",
+					"letterSpacing": "var(--wp--custom--ds--font--tracking--tight)"
+				}
+			}
+		}
+	}
+}

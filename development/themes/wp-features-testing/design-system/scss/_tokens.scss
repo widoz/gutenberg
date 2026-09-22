@@ -1,0 +1,90 @@
+// The token contract of the design system.
+//
+// Each map names the tokens of one group, and points each name at the `ds`
+// custom property that `design-system/tokens/00-contract.json` declares.
+//
+// This file holds no literal value and no preset name. A token changes in the
+// contract JSON, and every mixin follows at run time, with no rebuild.
+
+@use 'sass:map';
+
+$color: (
+	surface: var(--wp--custom--ds--color--surface),
+	on-surface: var(--wp--custom--ds--color--on-surface),
+	muted: var(--wp--custom--ds--color--muted),
+	on-muted: var(--wp--custom--ds--color--on-muted),
+	border: var(--wp--custom--ds--color--border),
+	ring: var(--wp--custom--ds--color--ring),
+	accent: var(--wp--custom--ds--color--accent),
+	on-accent: var(--wp--custom--ds--color--on-accent),
+	danger: var(--wp--custom--ds--color--danger),
+	danger-surface: var(--wp--custom--ds--color--danger-surface),
+);
+
+$font-family: (
+	body: var(--wp--custom--ds--font--family--body),
+	heading: var(--wp--custom--ds--font--family--heading),
+	mono: var(--wp--custom--ds--font--family--mono),
+);
+
+$font-size: (
+	caption: var(--wp--custom--ds--font--size--caption),
+	body-sm: var(--wp--custom--ds--font--size--body-sm),
+	body: var(--wp--custom--ds--font--size--body),
+	lead: var(--wp--custom--ds--font--size--lead),
+	title: var(--wp--custom--ds--font--size--title),
+	display: var(--wp--custom--ds--font--size--display),
+);
+
+$weight: (
+	normal: var(--wp--custom--ds--font--weight--normal),
+	medium: var(--wp--custom--ds--font--weight--medium),
+	semibold: var(--wp--custom--ds--font--weight--semibold),
+);
+
+$leading: (
+	none: var(--wp--custom--ds--font--leading--none),
+	snug: var(--wp--custom--ds--font--leading--snug),
+	normal: var(--wp--custom--ds--font--leading--normal),
+	relaxed: var(--wp--custom--ds--font--leading--relaxed),
+);
+
+$tracking: (
+	tight: var(--wp--custom--ds--font--tracking--tight),
+	normal: var(--wp--custom--ds--font--tracking--normal),
+	wide: var(--wp--custom--ds--font--tracking--wide),
+);
+
+$space: (
+	xs: var(--wp--custom--ds--space--xs),
+	sm: var(--wp--custom--ds--space--sm),
+	md: var(--wp--custom--ds--space--md),
+	lg: var(--wp--custom--ds--space--lg),
+	xl: var(--wp--custom--ds--space--xl),
+);
+
+$radius: (
+	sm: var(--wp--custom--ds--radius--sm),
+	md: var(--wp--custom--ds--radius--md),
+	lg: var(--wp--custom--ds--radius--lg),
+);
+
+$motion: (
+	duration: var(--wp--custom--ds--motion--duration),
+	easing: var(--wp--custom--ds--motion--easing),
+);
+
+$elevation: (
+	rest: var(--wp--custom--ds--elevation--rest),
+	hover: var(--wp--custom--ds--elevation--hover),
+	lift: var(--wp--custom--ds--elevation--lift),
+);
+
+// Read one token. It fails the build when the name is not in the contract.
+@function get($group, $name) {
+	@if not map.has-key($group, $name) {
+		@error 'Unknown design system token: #{$name}.';
+	}
+
+	@return map.get($group, $name);
+}

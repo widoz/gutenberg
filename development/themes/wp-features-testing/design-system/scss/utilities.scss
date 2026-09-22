@@ -1,0 +1,22 @@
+// Utility classes of the design system.
+//
+// Each class is one mixin, exposed to the block editor. Add a class to any
+// block in the Advanced panel. A custom block includes the mixin instead.
+
+@use 'design-system/scss/mixins' as ds;
+
+.ds-elevate {
+	@include ds.elevate;
+}
+
+.ds-stack {
+	@include ds.stack;
+}
+
+.ds-split {
+	@include ds.split;
+}
+
+.ds-icon-button {
+	@include ds.icon-button;
+}

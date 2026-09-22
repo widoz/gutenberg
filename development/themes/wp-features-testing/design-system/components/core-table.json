@@ -1,0 +1,19 @@
+{
+	"$schema": "https://schemas.wp.org/wp/6.7/theme.json",
+	"version": 3,
+	"styles": {
+		"blocks": {
+			"core/table": {
+				"border": {
+					"color": "var(--wp--custom--ds--color--border)",
+					"style": "solid",
+					"width": "1px"
+				},
+				"typography": {
+					"fontSize": "var(--wp--custom--ds--font--size--body-sm)",
+					"lineHeight": "var(--wp--custom--ds--font--leading--normal)"
+				}
+			}
+		}
+	}
+}
