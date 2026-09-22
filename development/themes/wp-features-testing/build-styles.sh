@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 #
-# Compile the SCSS of the design system and of every block.
+# Build the design system.
 #
-# It uses the Sass binary of the Gutenberg checkout. Pass `--watch` to keep it
-# running.
+# It writes `design-system/scss/_tokens.scss` from the JSON token contract,
+# then compiles the SCSS of the design system and of every block.
+#
+# It uses the Node and Sass binaries of the Gutenberg checkout. Pass `--watch`
+# to keep Sass running. To watch the JSON contract as well, run `npm start`.
 
 set -euo pipefail
 
@@ -14,6 +17,8 @@ if [[ ! -x "${sass_bin}" ]]; then
 	echo "Sass not found at ${sass_bin}. Run npm install in the Gutenberg root." >&2
 	exit 1
 fi
+
+node "${theme_dir}/design-system/scripts/generate-tokens.mjs"
 
 "${sass_bin}" \
 	--no-source-map \

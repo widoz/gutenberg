@@ -1,14 +1,19 @@
-// The token contract of the design system.
+// The token contract of the design system, for SCSS.
+//
+// GENERATED FILE. Do not edit it.
+//
+// Source: tokens/00-tokens.json
+// Command: npm run tokens
 //
 // Each map names the tokens of one group, and points each name at the `ds`
-// custom property that `design-system/tokens/00-contract.json` declares.
-//
-// This file holds no literal value and no preset name. A token changes in the
-// contract JSON, and every mixin follows at run time, with no rebuild.
+// custom property that the contract declares. The file holds no literal value
+// and no preset name, so a token changes in the contract JSON, and every mixin
+// follows at run time, with no rebuild.
 
 @use 'sass:map';
 
 $color: (
+	page: var(--wp--custom--ds--color--page),
 	surface: var(--wp--custom--ds--color--surface),
 	on-surface: var(--wp--custom--ds--color--on-surface),
 	muted: var(--wp--custom--ds--color--muted),
@@ -19,6 +24,7 @@ $color: (
 	on-accent: var(--wp--custom--ds--color--on-accent),
 	danger: var(--wp--custom--ds--color--danger),
 	danger-surface: var(--wp--custom--ds--color--danger-surface),
+	red: var(--wp--custom--ds--color--red),
 );
 
 $font-family: (
@@ -36,20 +42,20 @@ $font-size: (
 	display: var(--wp--custom--ds--font--size--display),
 );
 
-$weight: (
+$font-weight: (
 	normal: var(--wp--custom--ds--font--weight--normal),
 	medium: var(--wp--custom--ds--font--weight--medium),
 	semibold: var(--wp--custom--ds--font--weight--semibold),
 );
 
-$leading: (
+$font-leading: (
 	none: var(--wp--custom--ds--font--leading--none),
 	snug: var(--wp--custom--ds--font--leading--snug),
 	normal: var(--wp--custom--ds--font--leading--normal),
 	relaxed: var(--wp--custom--ds--font--leading--relaxed),
 );
 
-$tracking: (
+$font-tracking: (
 	tight: var(--wp--custom--ds--font--tracking--tight),
 	normal: var(--wp--custom--ds--font--tracking--normal),
 	wide: var(--wp--custom--ds--font--tracking--wide),
@@ -61,6 +67,7 @@ $space: (
 	md: var(--wp--custom--ds--space--md),
 	lg: var(--wp--custom--ds--space--lg),
 	xl: var(--wp--custom--ds--space--xl),
+	xxl: var(--wp--custom--ds--space--xxl),
 );
 
 $radius: (
@@ -76,8 +83,14 @@ $motion: (
 
 $elevation: (
 	rest: var(--wp--custom--ds--elevation--rest),
+	raised: var(--wp--custom--ds--elevation--raised),
 	hover: var(--wp--custom--ds--elevation--hover),
 	lift: var(--wp--custom--ds--elevation--lift),
+);
+
+$layout: (
+	content: var(--wp--custom--ds--layout--content),
+	wide: var(--wp--custom--ds--layout--wide),
 );
 
 // Read one token. It fails the build when the name is not in the contract.
