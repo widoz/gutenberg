@@ -1,0 +1,69 @@
+.wp-block-wp-features-testing-notice {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  column-gap: var(--wp--custom--ds--space--sm);
+  transition: box-shadow var(--wp--custom--ds--motion--duration) var(--wp--custom--ds--motion--easing), transform var(--wp--custom--ds--motion--duration) var(--wp--custom--ds--motion--easing);
+}
+@media (prefers-reduced-motion: reduce) {
+  .wp-block-wp-features-testing-notice {
+    transition: none;
+  }
+}
+.wp-block-wp-features-testing-notice:hover {
+  box-shadow: var(--wp--custom--ds--elevation--hover);
+  transform: translateY(var(--wp--custom--ds--elevation--lift));
+}
+@media (prefers-reduced-motion: reduce) {
+  .wp-block-wp-features-testing-notice:hover {
+    transform: none;
+  }
+}
+.wp-block-wp-features-testing-notice[hidden] {
+  display: none;
+}
+.wp-block-wp-features-testing-notice__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wp--custom--ds--space--xs);
+  min-width: 0;
+}
+.wp-block-wp-features-testing-notice__title {
+  margin: 0;
+  font-size: var(--wp--custom--ds--font--size--body-sm);
+  line-height: var(--wp--custom--ds--font--leading--none);
+  font-weight: var(--wp--custom--ds--font--weight--medium);
+  letter-spacing: var(--wp--custom--ds--font--tracking--tight);
+}
+.wp-block-wp-features-testing-notice__content {
+  margin: 0;
+  opacity: 0.9;
+}
+.wp-block-wp-features-testing-notice__dismiss {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--wp--custom--ds--radius--sm);
+  background: transparent;
+  color: inherit;
+  opacity: 0.6;
+  cursor: pointer;
+  transition: opacity var(--wp--custom--ds--motion--duration) var(--wp--custom--ds--motion--easing);
+}
+@media (prefers-reduced-motion: reduce) {
+  .wp-block-wp-features-testing-notice__dismiss {
+    transition: none;
+  }
+}
+.wp-block-wp-features-testing-notice__dismiss:hover, .wp-block-wp-features-testing-notice__dismiss:focus-visible {
+  opacity: 1;
+}
+.wp-block-wp-features-testing-notice__dismiss:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}

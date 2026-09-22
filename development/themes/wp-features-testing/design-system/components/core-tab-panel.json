@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schemas.wp.org/wp/6.7/theme.json",
+	"version": 3,
+	"styles": {
+		"blocks": {
+			"core/tab-panel": {
+				"spacing": {
+					"padding": {
+						"top": "var(--wp--custom--ds--space--md)"
+					}
+				}
+			}
+		}
+	}
+}

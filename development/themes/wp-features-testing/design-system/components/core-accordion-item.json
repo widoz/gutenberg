@@ -1,0 +1,20 @@
+{
+	"$schema": "https://schemas.wp.org/wp/6.7/theme.json",
+	"version": 3,
+	"styles": {
+		"blocks": {
+			"core/accordion-item": {
+				"color": {
+					"background": "var(--wp--custom--ds--color--surface)",
+					"text": "var(--wp--custom--ds--color--on-surface)"
+				},
+				"border": {
+					"color": "var(--wp--custom--ds--color--border)",
+					"radius": "var(--wp--custom--ds--radius--lg)",
+					"style": "solid",
+					"width": "1px"
+				}
+			}
+		}
+	}
+}

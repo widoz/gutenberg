@@ -1,0 +1,28 @@
+{
+	"$schema": "https://schemas.wp.org/wp/6.7/theme.json",
+	"version": 3,
+	"styles": {
+		"blocks": {
+			"core/details": {
+				"color": {
+					"background": "var(--wp--custom--ds--color--surface)",
+					"text": "var(--wp--custom--ds--color--on-surface)"
+				},
+				"border": {
+					"color": "var(--wp--custom--ds--color--border)",
+					"radius": "var(--wp--custom--ds--radius--lg)",
+					"style": "solid",
+					"width": "1px"
+				},
+				"spacing": {
+					"padding": {
+						"top": "var(--wp--custom--ds--space--md)",
+						"right": "var(--wp--custom--ds--space--md)",
+						"bottom": "var(--wp--custom--ds--space--md)",
+						"left": "var(--wp--custom--ds--space--md)"
+					}
+				}
+			}
+		}
+	}
+}

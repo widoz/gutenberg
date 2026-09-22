@@ -1,0 +1,111 @@
+// Design system mixins.
+//
+// These cover what theme.json cannot express: a hover state, a transition, a
+// media query, and a layout primitive. The paint of a component stays in
+// theme.json, where the user can override it.
+
+@use 'sass:list';
+@use 'tokens' as t;
+
+// Respect the motion preference of the reader.
+@mixin reduced-motion {
+	@media (prefers-reduced-motion: reduce) {
+		@content;
+	}
+}
+
+// Move one property, with the motion tokens.
+@mixin transition($properties...) {
+	$value: ();
+
+	@each $property in $properties {
+		$value: list.append(
+			$value,
+			#{$property} t.get(t.$motion, duration) t.get(t.$motion, easing),
+			$separator: comma
+		);
+	}
+
+	transition: $value;
+
+	@include reduced-motion {
+		transition: none;
+	}
+}
+
+// Raise the element on hover.
+@mixin elevate {
+	@include transition(box-shadow, transform);
+
+	&:hover {
+		box-shadow: t.get(t.$elevation, hover);
+		transform: translateY(t.get(t.$elevation, lift));
+
+		@include reduced-motion {
+			transform: none;
+		}
+	}
+}
+
+// Stack the children in a column.
+@mixin stack($gap: xs) {
+	display: flex;
+	flex-direction: column;
+	gap: t.get(t.$space, $gap);
+	min-width: 0;
+}
+
+// Place one leading slot and one trailing slot on the same row.
+@mixin split($gap: sm) {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	align-items: start;
+	column-gap: t.get(t.$space, $gap);
+}
+
+// A quiet square button that carries one icon.
+@mixin icon-button($size: 1.75rem) {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: $size;
+	height: $size;
+	padding: 0;
+	border: 0;
+	border-radius: t.get(t.$radius, sm);
+	background: transparent;
+	color: inherit;
+	opacity: 0.6;
+	cursor: pointer;
+
+	@include transition(opacity);
+
+	&:hover,
+	&:focus-visible {
+		opacity: 1;
+	}
+
+	@include focus-ring;
+}
+
+// The focus ring of the design system.
+@mixin focus-ring($color: currentColor) {
+	&:focus-visible {
+		outline: 2px solid $color;
+		outline-offset: 2px;
+	}
+}
+
+// One step of the type scale.
+@mixin text($size: body-sm, $line-height: normal, $font-weight: null, $letter-spacing: null) {
+	font-size: t.get(t.$font-size, $size);
+	line-height: t.get(t.$leading, $line-height);
+
+	@if $font-weight {
+		font-weight: t.get(t.$weight, $font-weight);
+	}
+
+	@if $letter-spacing {
+		letter-spacing: t.get(t.$tracking, $letter-spacing);
+	}
+}

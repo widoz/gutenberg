@@ -1,0 +1,16 @@
+{
+	"$schema": "https://schemas.wp.org/wp/6.7/theme.json",
+	"version": 3,
+	"title": "Destructive",
+	"slug": "destructive",
+	"blockTypes": [ "wp-features-testing/notice" ],
+	"styles": {
+		"color": {
+			"background": "var(--wp--custom--ds--color--danger-surface)",
+			"text": "var(--wp--custom--ds--color--danger)"
+		},
+		"border": {
+			"color": "var(--wp--custom--ds--color--danger)"
+		}
+	}
+}

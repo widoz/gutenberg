@@ -1,0 +1,17 @@
+{
+	"$schema": "https://schemas.wp.org/wp/6.7/theme.json",
+	"version": 3,
+	"styles": {
+		"blocks": {
+			"core/search": {
+				"spacing": {
+					"padding": {},
+					"blockGap": "var(--wp--custom--ds--space--xs)"
+				},
+				"typography": {
+					"fontSize": "var(--wp--custom--ds--font--size--body-sm)"
+				}
+			}
+		}
+	}
+}

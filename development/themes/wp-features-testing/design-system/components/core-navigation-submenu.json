@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schemas.wp.org/wp/6.7/theme.json",
+	"version": 3,
+	"styles": {
+		"blocks": {
+			"core/navigation-submenu": {
+				"color": {
+					"background": "var(--wp--custom--ds--color--surface)",
+					"text": "var(--wp--custom--ds--color--on-surface)"
+				},
+				"border": {
+					"color": "var(--wp--custom--ds--color--border)",
+					"radius": "var(--wp--custom--ds--radius--md)",
+					"style": "solid",
+					"width": "1px"
+				},
+				"shadow": "var(--wp--custom--ds--elevation--rest)"
+			}
+		}
+	}
+}

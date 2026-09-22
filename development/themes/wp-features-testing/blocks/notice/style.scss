@@ -1,0 +1,42 @@
+// Notice block.
+//
+// The paint comes from theme.json: the surface, the type, and the
+// `destructive` block style variation. This file holds the structure, and the
+// states that theme.json cannot express. It includes the design system mixins.
+
+@use 'design-system/scss/mixins' as ds;
+
+.wp-block-wp-features-testing-notice {
+	position: relative;
+
+	@include ds.split;
+	@include ds.elevate;
+
+	&[hidden] {
+		display: none;
+	}
+
+	&__body {
+		@include ds.stack;
+	}
+
+	&__title {
+		margin: 0;
+
+		@include ds.text(
+			$size: body-sm,
+			$line-height: none,
+			$font-weight: medium,
+			$letter-spacing: tight
+		);
+	}
+
+	&__content {
+		margin: 0;
+		opacity: 0.9;
+	}
+
+	&__dismiss {
+		@include ds.icon-button;
+	}
+}

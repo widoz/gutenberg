@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schemas.wp.org/wp/6.7/theme.json",
+	"version": 3,
+	"styles": {
+		"blocks": {
+			"core/cover": {
+				"border": {
+					"radius": "var(--wp--custom--ds--radius--lg)"
+				},
+				"spacing": {
+					"padding": {
+						"top": "var(--wp--custom--ds--space--xl)",
+						"right": "var(--wp--custom--ds--space--xl)",
+						"bottom": "var(--wp--custom--ds--space--xl)",
+						"left": "var(--wp--custom--ds--space--xl)"
+					}
+				}
+			}
+		}
+	}
+}
