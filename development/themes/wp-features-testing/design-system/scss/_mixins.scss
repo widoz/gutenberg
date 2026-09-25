@@ -5,7 +5,19 @@
 // theme.json, where the user can override it.
 
 @use 'sass:list';
-@use 'tokens' as t;
+
+// Read one token of the contract, as the custom property that theme.json
+// emits. Give the path of keys: `token(font, size, body)`. The value resolves
+// at run time, so a change in the contract JSON needs no rebuild.
+@function token($keys...) {
+	$name: '--wp--custom--ds';
+
+	@each $key in $keys {
+		$name: '#{$name}--#{$key}';
+	}
+
+	@return var(#{$name});
+}
 
 // Respect the motion preference of the reader.
 @mixin reduced-motion {
@@ -21,7 +33,7 @@
 	@each $property in $properties {
 		$value: list.append(
 			$value,
-			#{$property} t.get(t.$motion, duration) t.get(t.$motion, easing),
+			#{$property} token(motion, duration) token(motion, easing),
 			$separator: comma
 		);
 	}
@@ -38,8 +50,8 @@
 	@include transition(box-shadow, transform);
 
 	&:hover {
-		box-shadow: t.get(t.$elevation, hover);
-		transform: translateY(t.get(t.$elevation, lift));
+		box-shadow: token(elevation, hover);
+		transform: translateY(token(elevation, lift));
 
 		@include reduced-motion {
 			transform: none;
@@ -51,7 +63,7 @@
 @mixin stack($gap: xs) {
 	display: flex;
 	flex-direction: column;
-	gap: t.get(t.$space, $gap);
+	gap: token(space, $gap);
 	min-width: 0;
 }
 
@@ -60,7 +72,7 @@
 	display: grid;
 	grid-template-columns: 1fr auto;
 	align-items: start;
-	column-gap: t.get(t.$space, $gap);
+	column-gap: token(space, $gap);
 }
 
 // A quiet square button that carries one icon.
@@ -72,7 +84,7 @@
 	height: $size;
 	padding: 0;
 	border: 0;
-	border-radius: t.get(t.$radius, sm);
+	border-radius: token(radius, sm);
 	background: transparent;
 	color: inherit;
 	opacity: 0.6;
@@ -96,16 +108,26 @@
 	}
 }
 
-// One step of the type scale.
-@mixin text($size: body-sm, $line-height: normal, $font-weight: null, $letter-spacing: null) {
-	font-size: t.get(t.$font-size, $size);
-	line-height: t.get(t.$font-leading, $line-height);
+// One step of the type scale. Give `$font-family` to set the family too.
+@mixin text(
+	$size: body-sm,
+	$line-height: normal,
+	$font-weight: null,
+	$letter-spacing: null,
+	$font-family: null
+) {
+	@if $font-family {
+		font-family: token(font, family, $font-family);
+	}
+
+	font-size: token(font, size, $size);
+	line-height: token(font, leading, $line-height);
 
 	@if $font-weight {
-		font-weight: t.get(t.$font-weight, $font-weight);
+		font-weight: token(font, weight, $font-weight);
 	}
 
 	@if $letter-spacing {
-		letter-spacing: t.get(t.$font-tracking, $letter-spacing);
+		letter-spacing: token(font, tracking, $letter-spacing);
 	}
 }

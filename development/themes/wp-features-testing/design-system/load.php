@@ -3,8 +3,8 @@
  * The single entry point of the design system.
  *
  * It holds everything that joins the design system to WordPress: the merge of
- * the JSON layer into global styles, and the utility stylesheet. It names no
- * theme and no project value, so the file moves with the directory.
+ * the JSON layer into global styles, and the stylesheets of the SCSS layer. It
+ * names no theme and no project value, so the file moves with the directory.
  *
  * A theme or a plugin loads the design system with two lines:
  *
@@ -34,7 +34,7 @@ function boot(): void {
 	$booted = true;
 
 	add_filter( 'wp_theme_json_data_theme', __NAMESPACE__ . '\\merge_global_styles' );
-	add_action( 'enqueue_block_assets', __NAMESPACE__ . '\\enqueue_utilities' );
+	add_action( 'enqueue_block_assets', __NAMESPACE__ . '\\enqueue_stylesheets' );
 }
 
 /**
@@ -92,24 +92,31 @@ function global_styles_files(): array {
 }
 
 /**
- * Load the utility stylesheet.
+ * Load the stylesheets of the SCSS layer.
  *
- * It holds what theme.json cannot express: the hover elevation, and the layout
- * primitives. The hook runs on the front end and inside the editor.
+ * They hold what theme.json cannot express: the defaults of the elements that
+ * theme.json does not style, the hover elevation, and the layout primitives.
+ * The element defaults load first, so a utility class wins over them. The hook
+ * runs on the front end and inside the editor.
  */
-function enqueue_utilities(): void {
-	$file = __DIR__ . '/assets/utilities.css';
-
-	if ( ! file_exists( $file ) ) {
-		return;
-	}
-
-	wp_enqueue_style(
-		'design-system',
-		asset_url( $file ),
-		array(),
-		(string) filemtime( $file )
+function enqueue_stylesheets(): void {
+	$stylesheets = array(
+		'design-system-elements' => __DIR__ . '/assets/element-defaults.css',
+		'design-system'          => __DIR__ . '/assets/utilities.css',
 	);
+
+	foreach ( $stylesheets as $handle => $file ) {
+		if ( ! file_exists( $file ) ) {
+			continue;
+		}
+
+		wp_enqueue_style(
+			$handle,
+			asset_url( $file ),
+			array(),
+			(string) filemtime( $file )
+		);
+	}
 }
 
 /**
