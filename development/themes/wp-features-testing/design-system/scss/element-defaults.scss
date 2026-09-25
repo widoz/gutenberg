@@ -1,0 +1,196 @@
+// Element defaults of the design system.
+//
+// The file has two groups of rules. The first repeats the element layer of
+// `tokens/20-elements.json`, with the selectors that WordPress uses for each
+// theme.json element. The second styles the elements outside theme.json.
+//
+// Every rule sits in the `ds-elements` cascade layer. CSS outside a layer wins
+// over a layered rule, whatever the specificity of the two selectors. The
+// global styles of WordPress, a block style, a component file and the Styles
+// panel of the user therefore all win, also for a `:hover` or a `:focus` rule.
+// The selectors skip the markup of a core block, such as `pre.wp-block-code`,
+// because the component layer already styles that block.
+
+@use 'design-system/scss/elements' as el;
+
+@layer ds-elements {
+	// The document.
+
+	:where(:root) {
+		@include el.root-spacing;
+	}
+
+	:where(body) {
+		@include el.body;
+	}
+
+	:where(.has-global-padding) {
+		@include el.global-padding;
+	}
+
+	:where(.wp-site-blocks, .is-layout-flow, .is-layout-constrained) {
+		@include el.flow;
+	}
+
+	:where(.is-layout-flex, .is-layout-grid) {
+		@include el.layout-gap;
+	}
+
+	::selection {
+		@include el.selection;
+	}
+
+	// The theme.json elements. The selectors are the ones of
+	// `WP_Theme_JSON::ELEMENTS`.
+
+	:where(h1, h2, h3, h4, h5, h6) {
+		@include el.heading;
+	}
+
+	@for $level from 1 through 6 {
+		:where(h#{$level}) {
+			@include el.heading-level($level);
+		}
+	}
+
+	:where(a:not(.wp-element-button)) {
+		@include el.link;
+	}
+
+	:where(.wp-element-button, .wp-block-button__link) {
+		@include el.button;
+	}
+
+	:where(
+		.wp-element-caption,
+		.wp-block-audio figcaption,
+		.wp-block-embed figcaption,
+		.wp-block-gallery figcaption,
+		.wp-block-image figcaption,
+		.wp-block-table figcaption,
+		.wp-block-video figcaption
+	) {
+		@include el.caption;
+	}
+
+	:where(cite) {
+		@include el.cite;
+	}
+
+	:where(label) {
+		@include el.label;
+	}
+
+	:where(
+		select,
+		textarea,
+		input:is([type='email'], [type='number'], [type='password'], [type='search'], [type='text'], [type='tel'], [type='url'])
+	) {
+		@include el.field;
+	}
+
+	// Text level.
+
+	:where(:not(pre) > code, samp) {
+		@include el.code;
+	}
+
+	:where(kbd) {
+		@include el.kbd;
+	}
+
+	:where(mark:not([style])) {
+		@include el.mark;
+	}
+
+	:where(strong, b) {
+		@include el.strong;
+	}
+
+	:where(del, s) {
+		@include el.del;
+	}
+
+	:where(abbr[title]) {
+		@include el.abbr;
+	}
+
+	:where(small) {
+		@include el.small;
+	}
+
+	:where(sup) {
+		@include el.script(super);
+	}
+
+	:where(sub) {
+		@include el.script(sub);
+	}
+
+	// Blocks of content.
+
+	:where(pre:not([class*='wp-block-'])) {
+		@include el.pre;
+	}
+
+	:where(hr:not(.wp-block-separator)) {
+		@include el.rule;
+	}
+
+	:where(blockquote:not([class*='wp-block-'])) {
+		@include el.blockquote;
+	}
+
+	:where(ul, ol):where(:not([class])) {
+		@include el.list;
+	}
+
+	:where(li)::marker {
+		@include el.marker;
+	}
+
+	:where(dl) {
+		@include el.description-list;
+	}
+
+	:where(table:not(.wp-calendar-table)) {
+		@include el.table;
+	}
+
+	:where(img, video, svg:not([class])) {
+		@include el.media;
+	}
+
+	// Forms.
+
+	:where(button:not([class])),
+	:where(input:is([type='button'], [type='reset'], [type='submit']):not([class])) {
+		@include el.button;
+	}
+
+	// A browser drops a whole selector list that holds one unknown pseudo element,
+	// so this rule stands alone.
+	::file-selector-button {
+		@include el.button;
+	}
+
+	:where(fieldset) {
+		@include el.fieldset;
+	}
+
+	:where(input[type='checkbox'], input[type='radio']) {
+		@include el.choice;
+	}
+
+	:where(progress, meter) {
+		@include el.gauge;
+	}
+
+	:where(summary) {
+		@include el.summary;
+	}
+
+	::placeholder {
+		@include el.placeholder;
+	}
+}

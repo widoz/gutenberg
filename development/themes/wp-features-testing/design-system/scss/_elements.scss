@@ -1,0 +1,434 @@
+// Element mixins of the design system.
+//
+// There are two groups:
+//
+// 1. The theme.json elements: the root, `heading`, `h1` to `h6`, `link`,
+//    `button`, `caption`, `cite`, `label`, `select` and `textInput`. Each
+//    mixin repeats what `tokens/20-elements.json` states for the element.
+//    The global styles of WordPress win over these rules, so the rules act
+//    only on a page that does not load global styles. A change to
+//    `tokens/20-elements.json` needs the same change here.
+// 2. The elements outside theme.json. The SCSS layer is their only source.
+//
+// `element-defaults.scss` applies the mixins to the bare HTML elements. A block
+// can include one on its own markup.
+//
+// Each mixin states the full set that theme.json states for an element: the
+// colour, the border, the spacing and the typography. An element inside a
+// heading therefore does not take the heading tracking or weight.
+
+@use 'mixins' as ds;
+
+// The document: the colour and the typography of the root. It matches the
+// root styles of `tokens/20-elements.json`. theme.json emits the same values
+// on `body`, and wins, so this rule is a fallback for a page that does not load
+// global styles.
+@mixin body {
+	background: ds.token(color, surface);
+	color: ds.token(color, on-surface);
+
+	@include ds.text(
+		$font-family: body,
+		$size: body,
+		$line-height: relaxed,
+		$font-weight: normal,
+		$letter-spacing: normal
+	);
+}
+
+// The root spacing: the root padding and the block gap. It matches the root
+// styles of `tokens/20-elements.json`. theme.json emits the same custom
+// properties on `:root`. The theme sets `useRootPaddingAwareAlignments`, so
+// WordPress puts the root padding on `.has-global-padding`, not on `body`.
+@mixin root-spacing {
+	--wp--style--root--padding-right: #{ds.token(space, lg)};
+	--wp--style--root--padding-left: #{ds.token(space, lg)};
+	--wp--style--block-gap: #{ds.token(space, lg)};
+}
+
+// A container that holds the root padding. A nested container does not add it
+// again.
+@mixin global-padding {
+	padding-right: var(--wp--style--root--padding-right);
+	padding-left: var(--wp--style--root--padding-left);
+
+	:where(:not(.alignfull.is-layout-flow) > .has-global-padding:not(.wp-block-block, .alignfull)) {
+		padding-right: 0;
+		padding-left: 0;
+	}
+}
+
+// Vertical rhythm between the children, with the block gap.
+@mixin flow($gap: var(--wp--style--block-gap)) {
+	> * {
+		margin-block-start: 0;
+		margin-block-end: 0;
+	}
+
+	> * + * {
+		margin-block-start: $gap;
+	}
+}
+
+// The gap of a flex or a grid layout, with the block gap.
+@mixin layout-gap($gap: var(--wp--style--block-gap)) {
+	gap: $gap;
+}
+
+// The focus outline of the `link` and `button` elements. theme.json states it
+// on `:focus`, so the mixin does the same.
+@mixin focus-outline {
+	&:focus {
+		outline: 2px solid ds.token(color, ring);
+		outline-offset: 2px;
+	}
+}
+
+// The `heading` element: every heading level.
+@mixin heading {
+	font-family: ds.token(font, family, heading);
+	font-weight: ds.token(font, weight, semibold);
+	line-height: ds.token(font, leading, snug);
+	letter-spacing: ds.token(font, tracking, tight);
+}
+
+// The `h1` to `h6` elements: the step of the type scale for one level.
+@mixin heading-level($level) {
+	@if $level == 1 {
+		font-size: ds.token(font, size, display);
+		line-height: ds.token(font, leading, none);
+	} @else if $level == 2 {
+		font-size: ds.token(font, size, title);
+	} @else if $level == 3 {
+		font-size: ds.token(font, size, lead);
+	} @else if $level == 4 {
+		font-size: ds.token(font, size, body);
+	} @else if $level == 5 {
+		font-size: ds.token(font, size, body-sm);
+	} @else if $level == 6 {
+		font-size: ds.token(font, size, caption);
+		letter-spacing: ds.token(font, tracking, wide);
+		text-transform: uppercase;
+	} @else {
+		@error 'The heading level must be 1 to 6, not `#{$level}`.';
+	}
+}
+
+// The `link` element.
+@mixin link {
+	color: ds.token(color, accent);
+	text-decoration: underline;
+
+	@include focus-outline;
+
+	&:hover {
+		text-decoration: none;
+	}
+}
+
+// The `caption` element.
+@mixin caption {
+	color: ds.token(color, on-muted);
+
+	@include ds.text($size: caption, $line-height: normal);
+}
+
+// The `cite` element.
+@mixin cite {
+	color: ds.token(color, on-muted);
+	font-size: ds.token(font, size, body-sm);
+	font-style: normal;
+	font-weight: ds.token(font, weight, medium);
+}
+
+// The `label` element.
+@mixin label {
+	color: ds.token(color, on-surface);
+
+	@include ds.text($size: body-sm, $line-height: snug, $font-weight: medium);
+}
+
+// The `select` and `textInput` elements: a form field.
+@mixin field {
+	padding: ds.token(space, sm) ds.token(space, md);
+	border: 1px solid ds.token(color, border);
+	border-radius: ds.token(radius, md);
+	background: ds.token(color, surface);
+	color: ds.token(color, on-surface);
+
+	@include ds.text($font-family: body, $size: body-sm, $line-height: snug);
+}
+
+// Inline code and sample output.
+@mixin code {
+	padding: 0 ds.token(space, xxs);
+	border-radius: ds.token(radius, sm);
+	background: ds.token(color, muted);
+	color: ds.token(color, on-surface);
+
+	@include ds.text(
+		$font-family: mono,
+		$size: body-sm,
+		$line-height: normal,
+		$font-weight: normal,
+		$letter-spacing: normal
+	);
+}
+
+// A key of the keyboard.
+@mixin kbd {
+	padding: 0 ds.token(space, xxs);
+	border: 1px solid ds.token(color, border);
+	border-radius: ds.token(radius, sm);
+	background: ds.token(color, muted);
+	box-shadow: ds.token(elevation, rest);
+	color: ds.token(color, on-surface);
+
+	@include ds.text(
+		$font-family: mono,
+		$size: caption,
+		$line-height: normal,
+		$font-weight: medium,
+		$letter-spacing: normal
+	);
+}
+
+// A block of preformatted text. It matches `components/core-code.json`.
+@mixin pre {
+	overflow-x: auto;
+	padding: ds.token(space, sm);
+	border: 1px solid ds.token(color, border);
+	border-radius: ds.token(radius, md);
+	background: ds.token(color, muted);
+	color: ds.token(color, on-surface);
+
+	@include ds.text(
+		$font-family: mono,
+		$size: body-sm,
+		$line-height: normal,
+		$font-weight: normal,
+		$letter-spacing: normal
+	);
+
+	code {
+		padding: 0;
+		border-radius: 0;
+		background: none;
+		font: inherit;
+	}
+}
+
+// Highlighted text. It keeps the typography of the text around it.
+@mixin mark {
+	padding: 0 ds.token(space, xxs);
+	border-radius: ds.token(radius, sm);
+	background: ds.token(color, highlight);
+	color: ds.token(color, on-highlight);
+}
+
+// Strong importance, on the weight scale of the contract.
+@mixin strong {
+	font-weight: ds.token(font, weight, semibold);
+}
+
+// Removed text.
+@mixin del {
+	color: ds.token(color, on-muted);
+	text-decoration: line-through;
+}
+
+// An abbreviation with a title.
+@mixin abbr {
+	text-decoration: underline dotted;
+	text-underline-offset: 0.2em;
+	cursor: help;
+}
+
+// Small print.
+@mixin small {
+	@include ds.text($size: caption, $line-height: normal, $letter-spacing: normal);
+}
+
+// A subscript or a superscript. The line height does not grow the line box.
+@mixin script($position: super) {
+	position: relative;
+	vertical-align: baseline;
+	font-size: ds.token(font, size, caption);
+	line-height: 0;
+
+	@if $position == super {
+		top: -0.5em;
+	} @else {
+		bottom: -0.25em;
+	}
+}
+
+// A thematic break. It matches `components/core-separator.json`.
+@mixin rule {
+	height: 0;
+	margin-block: ds.token(space, xl);
+	border: 0;
+	border-top: 1px solid ds.token(color, border);
+	color: ds.token(color, border);
+}
+
+// A quotation block. It matches `components/core-quote.json`.
+@mixin blockquote {
+	margin-inline: 0;
+	padding-left: ds.token(space, md);
+	border-left: 2px solid ds.token(color, border);
+	color: ds.token(color, on-muted);
+	font-style: italic;
+
+	@include ds.text($size: body, $line-height: relaxed, $letter-spacing: normal);
+}
+
+// An ordered or an unordered list. It matches `components/core-list.json`.
+@mixin list {
+	padding-left: ds.token(space, lg);
+
+	li + li {
+		margin-top: ds.token(space, xs);
+	}
+}
+
+// The bullet or the number of a list item. theme.json cannot reach it.
+@mixin marker {
+	color: ds.token(color, on-muted);
+	font-weight: ds.token(font, weight, medium);
+}
+
+// A description list.
+@mixin description-list {
+	dt {
+		color: ds.token(color, on-surface);
+		font-weight: ds.token(font, weight, medium);
+	}
+
+	dd {
+		margin: 0 0 ds.token(space, xs);
+		padding-left: ds.token(space, md);
+		color: ds.token(color, on-muted);
+	}
+}
+
+// A data table, its cells and its caption. It matches
+// `components/core-table.json`.
+@mixin table {
+	width: 100%;
+	border-collapse: collapse;
+	color: ds.token(color, on-surface);
+
+	@include ds.text($size: body-sm, $line-height: normal, $letter-spacing: normal);
+
+	th,
+	td {
+		padding: ds.token(space, xs) ds.token(space, sm);
+		border-bottom: 1px solid ds.token(color, border);
+		text-align: start;
+		vertical-align: top;
+	}
+
+	th {
+		color: ds.token(color, on-muted);
+		font-weight: ds.token(font, weight, medium);
+	}
+
+	caption {
+		caption-side: bottom;
+		padding-top: ds.token(space, xs);
+		color: ds.token(color, on-muted);
+
+		@include ds.text($size: caption, $line-height: normal);
+	}
+}
+
+// Media that must not overflow its container.
+@mixin media {
+	max-width: 100%;
+	height: auto;
+}
+
+// A group of form controls, and its legend. The legend matches the `label`
+// element.
+@mixin fieldset {
+	margin: 0;
+	padding: ds.token(space, md);
+	border: 1px solid ds.token(color, border);
+	border-radius: ds.token(radius, md);
+
+	legend {
+		padding-inline: ds.token(space, xs);
+		color: ds.token(color, on-surface);
+
+		@include ds.text($size: body-sm, $line-height: snug, $font-weight: medium);
+	}
+}
+
+// The `button` element of `tokens/20-elements.json`. theme.json reaches
+// `.wp-element-button` and `.wp-block-button__link` only, so
+// `element-defaults.scss` also applies it to a button without a class.
+@mixin button {
+	padding: ds.token(space, sm) ds.token(space, md);
+	border: 1px solid ds.token(color, accent);
+	border-radius: ds.token(radius, md);
+	background: ds.token(color, accent);
+	box-shadow: ds.token(elevation, rest);
+	color: ds.token(color, on-accent);
+	text-decoration: none;
+	cursor: pointer;
+
+	@include ds.text(
+		$font-family: body,
+		$size: body-sm,
+		$line-height: snug,
+		$font-weight: medium,
+		$letter-spacing: normal
+	);
+	@include ds.transition(box-shadow);
+	@include focus-outline;
+
+	&:hover {
+		box-shadow: ds.token(elevation, hover);
+	}
+
+	&:active {
+		box-shadow: ds.token(elevation, rest);
+	}
+}
+
+// A checkbox or a radio button.
+@mixin choice {
+	width: 1rem;
+	height: 1rem;
+	accent-color: ds.token(color, accent);
+	cursor: pointer;
+
+	@include ds.focus-ring(ds.token(color, ring));
+}
+
+// A progress bar or a meter.
+@mixin gauge {
+	accent-color: ds.token(color, accent);
+}
+
+// The summary line of a disclosure.
+@mixin summary {
+	color: ds.token(color, on-surface);
+	cursor: pointer;
+
+	@include ds.text($size: body, $line-height: snug, $font-weight: medium);
+	@include ds.focus-ring(ds.token(color, ring));
+}
+
+// The hint text of an empty form field.
+@mixin placeholder {
+	color: ds.token(color, on-muted);
+	opacity: 1;
+}
+
+// The text that the reader selects.
+@mixin selection {
+	background: ds.token(color, accent);
+	color: ds.token(color, on-accent);
+}

@@ -14,7 +14,7 @@ Every plugin and library of the project depends on this copy, and reads the toke
 | Token contract | `tokens/00-tokens.json` | theme.json fragment | The `ds` custom properties. |
 | Presets | `tokens/10-presets.json` | theme.json fragment | The `--wp--preset--*` custom properties. |
 | Element and component defaults | `tokens/20-elements.json`, `components/` | theme.json fragments | The same tokens. |
-| States, transitions and layout | `scss/`, built into `assets/` | SCSS | SCSS mixins. |
+| States, transitions, layout, and the elements outside theme.json | `scss/`, built into `assets/` | SCSS | SCSS mixins and element selectors. |
 | Scaffold record | `scaffold.json` | JSON | The source and version of this copy. |
 
 The file name sets the merge order inside a directory. The number prefix makes that order explicit.
@@ -32,7 +32,7 @@ WordPress\DesignSystem\boot();
 `boot()` registers two hooks:
 
 - `wp_theme_json_data_theme` merges the JSON layer into global styles.
-- `enqueue_block_assets` loads `assets/utilities.css` on the front end and in the editor.
+- `enqueue_block_assets` loads `assets/element-defaults.css`, then `assets/utilities.css`, on the front end and in the editor.
 
 `boot()` runs once. A second call returns without an effect, so several consumers of the same copy can call it. The stylesheet URL comes from the location of the file, so the directory works inside a theme, inside a parent theme, or inside a plugin.
 
@@ -66,8 +66,6 @@ The file switches off the default WordPress palette, gradients, font sizes and s
 A preset that holds `var()` instead of a literal has one cost: WordPress and the editor cannot read the value. Fluid typography cannot compute a `clamp()` from it, duotone cannot build a filter from it, and a colour swatch in the editor interface can render empty where the custom property is not defined. Fluid typography and duotone are off in this theme. Check the palette and the type scale in the editor after a change here.
 
 ## The merge
-
-`scss/_tokens.scss` mirrors the contract for SCSS. It names the `ds` custom properties and holds no literal and no preset name, so a change in the contract JSON reaches every mixin at run time, with no rebuild. `get()` fails the build on a name that the contract does not hold.
 
 Every JSON file here is valid theme.json: it needs `version`, and it holds `settings`, `styles`, or both. `tokens/` merges first, then `components/`, and the file name sets the order inside a directory. Custom properties resolve at run time, so the contract and the presets can merge in either order.
 
@@ -104,7 +102,7 @@ A rule that theme.json cannot express belongs in the SCSS layer: a hover state, 
 
 ## The SCSS layer
 
-`scss/_tokens.scss` names the custom properties that theme.json emits. It holds no literal value, so a theme style variation that changes a token changes every mixin at run time.
+The mixins read the `ds` custom properties that theme.json emits, through the `token()` function: `token(space, md)` returns `var(--wp--custom--ds--space--md)`. The SCSS holds no literal value, so a change in the contract JSON, or a theme style variation that changes a token, changes every mixin at run time, with no rebuild.
 
 `scss/_mixins.scss` holds the mixins: `elevate`, `stack`, `split`, `icon-button`, `focus-ring`, `text`, `transition`, `reduced-motion`.
 
@@ -123,6 +121,43 @@ A block includes what it needs:
 }
 ```
 
+## The element defaults in SCSS
+
+The SCSS layer holds a default for every HTML element, in two groups:
+
+- **The theme.json elements**: the root, `heading`, `h1` to `h6`, `link`, `button`, `caption`, `cite`, `label`, `select` and `textInput`. The rules repeat `tokens/20-elements.json`, with the selectors that WordPress uses for each element (`WP_Theme_JSON::ELEMENTS`). They are a fallback for a page that does not load global styles. A change to `tokens/20-elements.json` needs the same change in the mixin.
+- **The elements outside theme.json**: the SCSS layer is their only source.
+
+The files:
+
+- `scss/_elements.scss` holds the mixins.
+    - The document: `root-spacing`, `body`, `global-padding`, `flow`, `layout-gap`, `selection`.
+    - The theme.json elements: `heading`, `heading-level`, `link`, `button`, `caption`, `cite`, `label`, `field`, `focus-outline`.
+    - The elements outside theme.json: `code`, `kbd`, `pre`, `mark`, `strong`, `del`, `abbr`, `small`, `script`, `rule`, `blockquote`, `list`, `marker`, `description-list`, `table`, `media`, `fieldset`, `choice`, `gauge`, `summary`, `placeholder`.
+- `scss/element-defaults.scss` applies each mixin to its selector, and builds `assets/element-defaults.css`.
+
+Each mixin states the full set that theme.json states for an element: the colour, the border, the spacing and the typography. An element inside a heading therefore does not take the heading tracking or weight.
+
+Every rule sits in the `ds-elements` cascade layer. CSS outside a layer wins over a layered rule, whatever the specificity. The global styles of WordPress, a block style, a component file and the Styles panel of the user therefore all win, also for a `:hover` or a `:focus` rule. The selectors skip the markup of a core block, such as `pre.wp-block-code` or `hr.wp-block-separator`, because the component layer already styles that block.
+
+The `button` mixin also covers a `button` or a submit `input` without a class, and the file picker button, because the `button` element of theme.json does not reach them. A change that the user makes in the Styles panel does not reach these buttons.
+
+The root padding goes on `.has-global-padding`, not on `body`, because the theme sets `useRootPaddingAwareAlignments`. The fallback does not add the negative margins of an `.alignfull` block.
+
+`mark` uses the `ds.color.highlight` and `ds.color.on-highlight` tokens. It skips a `mark` that carries an inline style, because the editor highlight format sets its own colour.
+
+A block that renders one of these elements inside its own markup includes the mixin:
+
+```scss
+@use 'design-system/scss/elements' as el;
+
+.wp-block-wp-features-testing-shortcut__key {
+	@include el.kbd;
+}
+```
+
+## Utility classes
+
 `scss/utilities.scss` exposes the same mixins as the classes `ds-elevate`, `ds-stack`, `ds-split` and `ds-icon-button`. Use one on a core block, through the Advanced panel. A custom block includes the mixin instead, and carries no utility class.
 
 ## Build
@@ -132,7 +167,7 @@ A block includes what it needs:
 ./build-styles.sh --watch   # compile on each change
 ```
 
-The script uses the Sass binary of the Gutenberg checkout. It writes `design-system/assets/utilities.css` and `blocks/notice/style.css`. Both are build output: change the `.scss` file, never the `.css` file.
+The script uses the Sass binary of the Gutenberg checkout. It writes `design-system/assets/element-defaults.css`, `design-system/assets/utilities.css` and `blocks/notice/style.css`. Both are build output: change the `.scss` file, never the `.css` file.
 
 ## Override order
 

@@ -1,11 +1,9 @@
 {
 	"name": "wp-features-testing",
 	"private": true,
-	"description": "The wp-features-testing theme. The scripts build the design system: they generate the SCSS token contract from the JSON one, then compile the stylesheets.",
+	"description": "The wp-features-testing theme. The scripts compile the stylesheets of the design system.",
 	"scripts": {
-		"tokens": "node design-system/scripts/generate-tokens.mjs",
-		"tokens:check": "node design-system/scripts/generate-tokens.mjs --check",
 		"build": "./build-styles.sh",
-		"start": "node design-system/scripts/watch.mjs"
+		"start": "./build-styles.sh --watch"
 	}
 }
